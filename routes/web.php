@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CinemaController;
+use App\Http\Controllers\FilmController;
+
 
 
 
@@ -39,6 +41,13 @@ Route::middleware('auth')->group(function () {
 
     // Route pour supprimer un cinéma
     Route::delete('/cinemas/{id}', [CinemaController::class, 'destroy'])->name('cinemas.destroy');
+
+
+    Route::get('/films', [FilmController::class, 'index'])->name('films.index');
+    Route::get('/films/create', [FilmController::class, 'create'])->name('films.create');
+    Route::post('/films', [FilmController::class, 'store'])->name('films.store');
+    Route::get('/films/{id}', [FilmController::class, 'show'])->name('films.show');
+    Route::delete('/films/{id}', [FilmController::class, 'destroy'])->name('films.destroy');
 });
 
 require __DIR__.'/auth.php';

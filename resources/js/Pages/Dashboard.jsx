@@ -19,11 +19,41 @@ export default function Dashboard() {
                             <p>Bienvenue sur le tableau de bord !</p>
 
                             {/* Ajout du bouton pour accéder à Cinémas */}
+                           
+                            
                             <Link
                                 href="/cinemas"
-                                className="mt-4 inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700"
+                                className="ml-10 inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-blue-700"
                             >
-                                Gérer les Cinémas
+                                Gérants
+                            </Link>
+
+                            <Link
+                                href="/cinemas"
+                                className="ml-4 inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700"
+                            >
+                                Cinémas
+                            </Link>
+
+                            <Link
+                                href="/films"
+                                className="ml-4 inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700"
+                            >
+                                Films
+                            </Link>
+
+                            <Link
+                                href="/cinemas"
+                                className="mt-4 ml-4 inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-blue-700"
+                            >
+                                Séances
+                            </Link>
+
+                            <Link
+                                href="/cinemas"
+                                className="mt-4 ml-4 inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-blue-700"
+                            >
+                                Réservations
                             </Link>
                         </div>
                     </div>

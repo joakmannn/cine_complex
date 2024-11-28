@@ -11,7 +11,7 @@ class Salle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom', 'capacite', 'cinema_id'];
+    protected $fillable = ['nom', 'capacite', 'cinema_id,'];
 
     public function cinema(): BelongsTo
     {

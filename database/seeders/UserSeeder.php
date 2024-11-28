@@ -3,21 +3,20 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Role;
 
 class UserSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        $admin = User::create([
+        User::create([
             'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
+            'email' => 'admin@cinemacomplex1.com',
+            'password' => Hash::make('Cinema1!'), // Chiffrez le mot de passe
         ]);
-
-        // Attacher le rôle Admin
-        $adminRole = Role::where('label', 'Admin')->first();
-        $admin->roles()->attach($adminRole->id);
     }
 }

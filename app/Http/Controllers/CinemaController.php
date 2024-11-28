@@ -25,19 +25,20 @@ class CinemaController extends Controller
 
     // Méthode pour enregistrer un nouveau cinéma
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-        ]);
+{
+    $request->validate([
+        'nom' => 'required|string|max:255',
+        'adresse' => 'required|string|max:255',
+    ]);
 
-        Cinema::create([
-            'name' => $request->name,
-            'address' => $request->address,
-        ]);
+    Cinema::create([
+        'nom' => $request->nom,
+        'adresse' => $request->adresse,
+    ]);
 
-        return redirect()->route('cinemas.index')->with('success', 'Cinéma ajouté avec succès.');
-    }
+    return redirect()->route('cinemas.index')->with('success', 'Cinéma ajouté avec succès.');
+}
+
 
     // Méthode pour afficher les détails d'un cinéma spécifique
     public function show($id)

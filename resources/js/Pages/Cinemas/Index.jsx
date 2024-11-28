@@ -6,6 +6,14 @@ export default function Index({ cinemas }) {
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Liste des cinémas</h1>
 
+            {/* Bouton pour revenir au dashboard */}
+            <Link
+                href="/dashboard"
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 mr-4"
+            >
+                Retour au Dashboard
+            </Link>
+
             {/* Bouton pour ajouter un cinéma */}
             <Link
                 href="/cinemas/create"
@@ -25,8 +33,8 @@ export default function Index({ cinemas }) {
                 <tbody>
                     {cinemas.map((cinema) => (
                         <tr key={cinema.id}>
-                            <td className="border border-gray-300 px-4 py-2">{cinema.name}</td>
-                            <td className="border border-gray-300 px-4 py-2">{cinema.address}</td>
+                            <td className="border border-gray-300 px-4 py-2">{cinema.nom}</td>
+                            <td className="border border-gray-300 px-4 py-2">{cinema.adresse}</td>
                             <td className="border border-gray-300 px-4 py-2">
                                 <Link
                                     href={`/cinemas/${cinema.id}`}

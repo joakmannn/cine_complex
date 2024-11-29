@@ -8,15 +8,13 @@ use App\Http\Controllers\SalleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\PublicController;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [PublicController::class, 'index'])->name('public.home'); // Page d'accueil publique
+Route::get('/cinemas/{id}', [PublicController::class, 'cinemaShow'])->name('public.cinema.show'); // Détails d'un cinéma
+Route::get('/films/{id}', [PublicController::class, 'filmShow'])->name('public.film.show'); // Détails d'un film
+
+
 
 // Dashboard route
 Route::get('/dashboard', function () {

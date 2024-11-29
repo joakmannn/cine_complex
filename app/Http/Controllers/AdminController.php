@@ -11,10 +11,6 @@ class AdminController extends Controller
 {
     public function index()
     {
-      
-    
-    
-    
         $users = User::with('roles')->get();
     
         return Inertia::render('Admin/Users', [

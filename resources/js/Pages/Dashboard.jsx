@@ -1,7 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { usePage, Head, Link } from '@inertiajs/react';
 
 export default function Dashboard() {
+
+    const { isAdmin } = usePage().props;
+
     return (
         <AuthenticatedLayout
             header={
@@ -20,13 +23,15 @@ export default function Dashboard() {
 
                             {/* Ajout du bouton pour accéder à Cinémas */}
                            
-                            
-                            <Link
-                                href="/admin/users"
-                                className="ml-10 inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700"
-                            >
-                                Gérants
-                            </Link>
+                          
+                            {isAdmin && (
+                                <Link
+                                    href="/admin/users"
+                                    className="ml-10 inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700"
+                                >
+                                    Gérants
+                                </Link>
+                            )}
 
 
                             <Link

@@ -44,7 +44,7 @@ export default function Dashboard() {
 
                             <Link
                                 href="/seances"
-                                className="mt-4 ml-4 inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-blue-700"
+                                className="mt-4 ml-4 inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700"
                             >
                                 Séances
                             </Link>

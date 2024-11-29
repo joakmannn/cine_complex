@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [CinemaController::class, 'store'])->name('cinemas.store');
         Route::get('/{id}', [CinemaController::class, 'show'])->name('cinemas.show');
         Route::delete('/{id}', [CinemaController::class, 'destroy'])->name('cinemas.destroy'); // PAS "cinemas/{id}"
+        Route::get('/{cinemaId}/salles', [CinemaController::class, 'loadSalles'])->name('cinemas.salles');
+
 
         
         // Salles management for a specific cinema

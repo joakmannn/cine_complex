@@ -59,6 +59,21 @@ class CinemaController extends Controller
     
         return redirect()->route('cinemas.index')->with('success', 'Cinéma supprimé avec succès.');
     }
+
+    public function loadSalles($cinemaId)
+    {
+        $cinemas = Cinema::all(); // Charger tous les cinémas
+        $films = Film::all(); // Charger tous les films
+        $salles = Salle::where('id_cinema', $cinemaId)->get(); // Charger les salles du cinéma sélectionné
+
+        return Inertia::render('Seances/Create', [
+            'cinemas' => $cinemas,
+            'films' => $films,
+            'selectedCinema' => $cinemaId,
+            'salles' => $salles,
+        ]);
+    }
+
     
 
 }

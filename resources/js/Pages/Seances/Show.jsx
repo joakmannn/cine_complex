@@ -15,6 +15,12 @@ export default function Show({ seance }) {
             <p>
                 <strong>Salle :</strong> {seance.salle.nom}
             </p>
+            <p>
+                <strong>Cinéma :</strong> {seance.salle.cinema.nom}
+            </p>
+            <p>
+                <strong>Adresse du cinéma :</strong> {seance.salle.cinema.adresse}
+            </p>
 
             <Link
                 href="/seances"

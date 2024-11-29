@@ -25,6 +25,7 @@ export default function Index({ seances }) {
                         <th className="border border-gray-300 px-4 py-2">Horaire</th>
                         <th className="border border-gray-300 px-4 py-2">Film</th>
                         <th className="border border-gray-300 px-4 py-2">Salle</th>
+                        <th className="border border-gray-300 px-4 py-2">Cinéma</th>
                         <th className="border border-gray-300 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
@@ -34,6 +35,9 @@ export default function Index({ seances }) {
                             <td className="border border-gray-300 px-4 py-2">{seance.horaire}</td>
                             <td className="border border-gray-300 px-4 py-2">{seance.film.titre}</td>
                             <td className="border border-gray-300 px-4 py-2">{seance.salle.nom}</td>
+                            <td className="border border-gray-300 px-4 py-2">
+                                {seance.salle.cinema.nom} ({seance.salle.cinema.adresse})
+                            </td>
                             <td className="border border-gray-300 px-4 py-2">
                                 <Link
                                     href={`/seances/${seance.id}`}

@@ -4,13 +4,13 @@ import { useForm, Link } from '@inertiajs/react';
 export default function Create({ films, salles }) {
     const { data, setData, post, errors } = useForm({
         horaire: '',
-        film_id: '',
-        salle_id: '',
+        id_film: '', // Correspond à la colonne id_film
+        id_salle: '', // Correspond à la colonne id_salle
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/seances');
+        post('/seances'); // Assurez-vous que la route est correcte
     };
 
     return (
@@ -31,15 +31,14 @@ export default function Create({ films, salles }) {
                     />
                     {errors.horaire && <p className="text-red-500 text-sm">{errors.horaire}</p>}
                 </div>
-
                 <div>
                     <label htmlFor="film" className="block font-medium">
                         Film :
                     </label>
                     <select
                         id="film"
-                        value={data.film_id}
-                        onChange={(e) => setData('film_id', e.target.value)}
+                        value={data.id_film}
+                        onChange={(e) => setData('id_film', e.target.value)}
                         className="border border-gray-300 rounded w-full px-4 py-2"
                     >
                         <option value="">-- Sélectionner un film --</option>
@@ -49,17 +48,16 @@ export default function Create({ films, salles }) {
                             </option>
                         ))}
                     </select>
-                    {errors.film_id && <p className="text-red-500 text-sm">{errors.film_id}</p>}
+                    {errors.id_film && <p className="text-red-500 text-sm">{errors.id_film}</p>}
                 </div>
-
                 <div>
                     <label htmlFor="salle" className="block font-medium">
                         Salle :
                     </label>
                     <select
                         id="salle"
-                        value={data.salle_id}
-                        onChange={(e) => setData('salle_id', e.target.value)}
+                        value={data.id_salle}
+                        onChange={(e) => setData('id_salle', e.target.value)}
                         className="border border-gray-300 rounded w-full px-4 py-2"
                     >
                         <option value="">-- Sélectionner une salle --</option>
@@ -69,9 +67,8 @@ export default function Create({ films, salles }) {
                             </option>
                         ))}
                     </select>
-                    {errors.salle_id && <p className="text-red-500 text-sm">{errors.salle_id}</p>}
+                    {errors.id_salle && <p className="text-red-500 text-sm">{errors.id_salle}</p>}
                 </div>
-
                 <div className="flex items-center justify-between">
                     <Link
                         href="/seances"

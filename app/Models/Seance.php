@@ -4,27 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Seance extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['horaire', 'film_id', 'salle_id'];
+    protected $fillable = ['horaire', 'id_film', 'id_salle'];
 
-    public function film(): BelongsTo
+    public function film()
     {
-        return $this->belongsTo(Film::class);
+        return $this->belongsTo(Film::class, 'id_film');
     }
 
-    public function salle(): BelongsTo
+    public function salle()
     {
-        return $this->belongsTo(Salle::class);
-    }
-
-    public function reservations(): HasMany
-    {
-        return $this->hasMany(Reservation::class);
+        return $this->belongsTo(Salle::class, 'id_salle');
     }
 }

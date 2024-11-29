@@ -31,15 +31,23 @@ class SeanceController extends Controller
 
     public function store(Request $request)
     {
+        // Validation
         $request->validate([
             'horaire' => 'required|date',
-            'film_id' => 'required|exists:films,id',
-            'salle_id' => 'required|exists:salles,id',
+            'id_film' => 'required|exists:films,id', // Validation pour id_film
+            'id_salle' => 'required|exists:salles,id', // Validation pour id_salle
         ]);
 
-        Seance::create($request->only(['horaire', 'film_id', 'salle_id']));
+        // Création de la séance
+        Seance::create([
+            'horaire' => $request->horaire,
+            'id_film' => $request->id_film,
+            'id_salle' => $request->id_salle,
+        ]);
 
-        return redirect()->route('seances.index')->with('success', 'Séance ajoutée avec succès.');
+        // Redirection avec un message de succès
+        return redirect()->route('seances.index')
+            ->with('success', 'Séance ajoutée avec succès.');
     }
 
     public function show($id)

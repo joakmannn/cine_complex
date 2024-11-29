@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,11 +13,7 @@ class Cinema extends Model
 
     public function salles(): HasMany
     {
-        return $this->hasMany(Salle::class);
-    }
-
-    public function users(): HasMany
-    {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Salle::class, 'id_cinema'); // Spécifie la clé étrangère correcte
     }
 }
+

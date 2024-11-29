@@ -1,7 +1,18 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 
 export default function Index({ cinemas }) {
+    const { delete: inertiaDelete } = useForm();
+
+    const handleDelete = (cinemaId) => {
+        if (confirm('Voulez-vous vraiment supprimer ce cinéma ?')) {
+            inertiaDelete(`/cinemas/${cinemaId}`, {
+                onSuccess: () => alert('Cinéma supprimé avec succès.'),
+                onError: (errors) => console.error(errors),
+            });
+        }
+    };
+
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Liste des cinémas</h1>
@@ -27,6 +38,7 @@ export default function Index({ cinemas }) {
                     <tr>
                         <th className="border border-gray-300 px-4 py-2">Nom</th>
                         <th className="border border-gray-300 px-4 py-2">Adresse</th>
+                        <th className="border border-gray-300 px-4 py-2">Nombre de salles</th>
                         <th className="border border-gray-300 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
@@ -35,6 +47,7 @@ export default function Index({ cinemas }) {
                         <tr key={cinema.id}>
                             <td className="border border-gray-300 px-4 py-2">{cinema.nom}</td>
                             <td className="border border-gray-300 px-4 py-2">{cinema.adresse}</td>
+                            <td className="border border-gray-300 px-4 py-2">{cinema.salles_count}</td>
                             <td className="border border-gray-300 px-4 py-2">
                                 <Link
                                     href={`/cinemas/${cinema.id}`}
@@ -43,24 +56,12 @@ export default function Index({ cinemas }) {
                                     Voir
                                 </Link>
                                 {' | '}
-                                <form
-                                    method="POST"
-                                    action={`/cinemas/${cinema.id}`}
-                                    onSubmit={(e) => {
-                                        if (!confirm('Voulez-vous vraiment supprimer ce cinéma ?')) {
-                                            e.preventDefault();
-                                        }
-                                    }}
-                                    style={{ display: 'inline' }}
+                                <button
+                                    onClick={() => handleDelete(cinema.id)}
+                                    className="text-red-500 hover:underline ml-2"
                                 >
-                                    <input type="hidden" name="_method" value="DELETE" />
-                                    <button
-                                        type="submit"
-                                        className="text-red-500 hover:underline ml-2"
-                                    >
-                                        Supprimer
-                                    </button>
-                                </form>
+                                    Supprimer
+                                </button>
                             </td>
                         </tr>
                     ))}

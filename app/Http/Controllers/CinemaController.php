@@ -8,14 +8,15 @@ use Illuminate\Http\Request;
 
 class CinemaController extends Controller
 {
-    // Méthode pour afficher la liste des cinémas
     public function index()
-    {
-        $cinemas = Cinema::all();
-        return Inertia::render('Cinemas/Index', [
-            'cinemas' => $cinemas
-        ]);
-    }
+{
+    $cinemas = Cinema::withCount('salles')->get();
+
+    return Inertia::render('Cinemas/Index', [
+        'cinemas' => $cinemas,
+    ]);
+}
+
 
     // Méthode pour afficher le formulaire d'ajout d'un cinéma
     public function create()
@@ -40,21 +41,24 @@ class CinemaController extends Controller
 }
 
 
-    // Méthode pour afficher les détails d'un cinéma spécifique
     public function show($id)
     {
-        $cinema = Cinema::findOrFail($id);  // Trouve le cinéma ou affiche une erreur 404
+        $cinema = Cinema::with('salles')->findOrFail($id);
+
         return Inertia::render('Cinemas/Show', [
-            'cinema' => $cinema
+            'cinema' => $cinema,
         ]);
     }
 
-    // Méthode pour supprimer un cinéma
+
     public function destroy($id)
     {
-        $cinema = Cinema::findOrFail($id);  // Trouve le cinéma ou affiche une erreur 404
+        $cinema = Cinema::findOrFail($id);
+    
         $cinema->delete();
-
+    
         return redirect()->route('cinemas.index')->with('success', 'Cinéma supprimé avec succès.');
     }
+    
+
 }

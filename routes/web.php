@@ -9,10 +9,17 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\ReservationController;
 
-Route::get('/', [PublicController::class, 'index'])->name('public.home'); // Page d'accueil publique
-Route::get('/cinemas/{id}', [PublicController::class, 'cinemaShow'])->name('public.cinema.show'); // Détails d'un cinéma
-Route::get('/films/{id}', [PublicController::class, 'filmShow'])->name('public.film.show'); // Détails d'un film
+Route::get('/', [PublicController::class, 'index'])->name('public.home');
+Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+Route::get('/reservations/create/{seance}', [ReservationController::class, 'create'])->name('reservations.create');
+
+
+Route::prefix('/public')->group(function () {
+    Route::get('/cinemas/{id}', [PublicController::class, 'cinemaShow'])->name('public.cinema.show');
+    Route::get('/films/{id}', [PublicController::class, 'filmShow'])->name('public.film.show');
+});
 
 
 
@@ -29,6 +36,8 @@ Route::middleware('auth')->group(function () {
         Route::patch('/', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+
 
     // Cinema management
     Route::prefix('/cinemas')->group(function () {

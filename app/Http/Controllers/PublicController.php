@@ -6,6 +6,9 @@ use App\Models\Film;
 use App\Models\Seance;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Tarif;
+use App\Models\Reservation;
+
 
 class PublicController extends Controller
 {
@@ -13,14 +16,27 @@ class PublicController extends Controller
     {
         $cinemas = Cinema::withCount('salles')->get();
         $films = Film::all();
-        $seances = Seance::with(['film', 'salle.cinema'])->get(); // Vérifiez bien la structure
-    
+        $tarifs = Tarif::all(); // Récupérer les tarifs
+
+        $seances = Seance::with(['film', 'salle.cinema', 'reservations'])->get();
+
+        // Calculer le nombre de places réservées et la capacité restante pour chaque séance
+        $seances = $seances->map(function ($seance) {
+            $placesReservees = $seance->reservations->sum('places_reservees');
+            $seance->placesReservees = $placesReservees;
+            $seance->capaciteRestante = $seance->salle->capacite - $placesReservees;
+
+            return $seance;
+        });
+
         return Inertia::render('Public/Home', [
             'cinemas' => $cinemas,
             'films' => $films,
             'seances' => $seances,
+            'tarifs' => $tarifs, // Passer les tarifs à la vue
         ]);
     }
+
     
 
     public function cinemaShow($id)

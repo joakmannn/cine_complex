@@ -5,25 +5,42 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Seance;
+use App\Models\Places;
+
+
 
 class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date_reservation', 'seance_id', 'user_id', 'tarif_id', 'places_reservees'];
+    protected $fillable = [
+        'seance_id',
+        'user_id', 
+        'nom',
+        'prenom',
+        'places_reservees',
+        'date_reservation',
+        'prix_total',
+    ];
 
     public function seance(): BelongsTo
     {
         return $this->belongsTo(Seance::class);
     }
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function tarif(): BelongsTo
+
+
+    public function places()
     {
-        return $this->belongsTo(Tarif::class);
+        return $this->hasMany(ReservationPlace::class);
     }
+
 }
+
+

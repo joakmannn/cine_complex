@@ -50,7 +50,7 @@ export default function Dashboard() {
                             </Link>
 
                             <Link
-                                href="/cinemas"
+                                href="/reservations"
                                 className="mt-4 ml-4 inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-blue-700"
                             >
                                 Réservations

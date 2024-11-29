@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\AdminController;
+
+
 
 Route::get('/', [PublicController::class, 'index'])->name('public.home');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
@@ -38,6 +41,11 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
 
+    Route::prefix('admin')->group(function () {
+        Route::get('/users', [AdminController::class, 'index'])->name('admin.users.index');
+        Route::get('/users/create', [AdminController::class, 'create'])->name('admin.users.create');
+        Route::post('/users', [AdminController::class, 'store'])->name('admin.users.store');
+    });
 
     // Cinema management
     Route::prefix('/cinemas')->group(function () {

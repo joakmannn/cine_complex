@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -17,7 +14,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'cinema_id',
     ];
 
     protected $hidden = [
@@ -25,22 +21,18 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    public function cinema(): BelongsTo
-    {
-        return $this->belongsTo(Cinema::class);
-    }
-
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'user_roles');
     }
 
-    public function reservations(): HasMany
+    public function isAdmin(): bool
     {
-        return $this->hasMany(Reservation::class);
+        return $this->roles->contains('label', 'Admin');
+    }
+
+    public function isGerant(): bool
+    {
+        return $this->roles->contains('label', 'Gérant');
     }
 }

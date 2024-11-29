@@ -22,11 +22,12 @@ export default function Dashboard() {
                            
                             
                             <Link
-                                href="/cinemas"
-                                className="ml-10 inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-blue-700"
+                                href="/admin/users"
+                                className="ml-10 inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700"
                             >
                                 Gérants
                             </Link>
+
 
                             <Link
                                 href="/cinemas"
@@ -51,7 +52,7 @@ export default function Dashboard() {
 
                             <Link
                                 href="/reservations"
-                                className="mt-4 ml-4 inline-block px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-blue-700"
+                                className="mt-4 ml-4 inline-block px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700"
                             >
                                 Réservations
                             </Link>

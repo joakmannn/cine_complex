@@ -1,77 +1,74 @@
-// ReservationForm.jsx
-import React from 'react';
-import { useForm } from '@inertiajs/react';
+import React from "react";
+import { useForm } from "@inertiajs/react";
 
 export default function ReservationForm({ seance, tarifs }) {
     const { data, setData, post, reset, errors } = useForm({
         seance_id: seance.id,
-        nom: '',
-        prenom: '',
-        places: [
-            { tarif_id: '' },
-        ],
+        nom: "",
+        prenom: "",
+        places: [{ tarif_id: "" }],
     });
 
     const handleAddPlace = () => {
         if (data.places.length < 7) {
-            setData('places', [...data.places, { tarif_id: '' }]);
+            setData("places", [...data.places, { tarif_id: "" }]);
         }
     };
 
     const handleRemovePlace = (index) => {
         const newPlaces = data.places.filter((_, i) => i !== index);
-        setData('places', newPlaces);
+        setData("places", newPlaces);
     };
 
     const handleChangePlaceTarif = (index, tarif_id) => {
         const newPlaces = data.places.map((place, i) =>
             i === index ? { ...place, tarif_id } : place
         );
-        setData('places', newPlaces);
+        setData("places", newPlaces);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post('/reservations', {
+        post("/reservations", {
             onSuccess: () => {
-                alert('Réservation réussie !');
+                alert("Réservation réussie !");
                 reset();
             },
             onError: () => {
-                alert('Erreur lors de la réservation.');
+                alert("Erreur lors de la réservation.");
             },
         });
     };
 
     return (
-        <form onSubmit={handleSubmit} className="mt-4">
+        <form onSubmit={handleSubmit} className="p-6 bg-white shadow-lg rounded-lg border">
+            <h3 className="text-xl font-bold mb-4 text-center">
+                Réservation pour la séance : {seance.film?.titre || "Inconnu"}
+            </h3>
+
             <label className="block mb-2">
                 <strong>Nom :</strong>
                 <input
                     type="text"
                     value={data.nom}
-                    onChange={(e) => setData('nom', e.target.value)}
+                    onChange={(e) => setData("nom", e.target.value)}
                     className="border border-gray-300 rounded w-full px-4 py-2 mt-1"
                     required
                 />
             </label>
-            {errors.nom && (
-                <p className="text-red-500">{errors.nom}</p>
-            )}
+            {errors.nom && <p className="text-red-500">{errors.nom}</p>}
 
             <label className="block mb-2">
                 <strong>Prénom :</strong>
                 <input
                     type="text"
                     value={data.prenom}
-                    onChange={(e) => setData('prenom', e.target.value)}
+                    onChange={(e) => setData("prenom", e.target.value)}
                     className="border border-gray-300 rounded w-full px-4 py-2 mt-1"
                     required
                 />
             </label>
-            {errors.prenom && (
-                <p className="text-red-500">{errors.prenom}</p>
-            )}
+            {errors.prenom && <p className="text-red-500">{errors.prenom}</p>}
 
             <div>
                 <strong>Places :</strong>
@@ -93,25 +90,28 @@ export default function ReservationForm({ seance, tarifs }) {
                                 ))}
                             </select>
                         </label>
-                        {errors[`places.${index}.tarif_id`] && (
-                            <p className="text-red-500">{errors[`places.${index}.tarif_id`]}</p>
-                        )}
                         {data.places.length > 1 && (
-                            <button type="button" onClick={() => handleRemovePlace(index)} className="text-red-500">
+                            <button
+                                type="button"
+                                onClick={() => handleRemovePlace(index)}
+                                className="text-red-500"
+                            >
                                 Supprimer la place
                             </button>
                         )}
                     </div>
                 ))}
                 {data.places.length < 7 && (
-                    <button type="button" onClick={handleAddPlace} className="mt-2 bg-green-500 text-white px-4 py-2 rounded">
+                    <button
+                        type="button"
+                        onClick={handleAddPlace}
+                        className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
+                    >
                         Ajouter une place
                     </button>
                 )}
             </div>
-            {errors.places && (
-                <p className="text-red-500">{errors.places}</p>
-            )}
+
             <button
                 type="submit"
                 className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"

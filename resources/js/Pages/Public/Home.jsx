@@ -1,46 +1,43 @@
-// Home.jsx
-import React from 'react';
-import ReservationForm from './ReservationForm';
+import React from "react";
+import Navigation from "./Components/Navigation";
+import Hero from "./Components/Hero";
+import Seances from "./Components/Seances";
+import Footer from "./Components/Footer";
 
-export default function Home({ cinemas, films, seances, tarifs }) {
+export default function Home({ seances, films, tarifs }) {
     return (
-        <div className="container mx-auto p-4">
-            {/* Votre code existant pour afficher les cinémas et les films */}
+        <div className="flex flex-col min-h-screen bg-gray-100">
+            {/* Barre de navigation */}
+            <Navigation />
 
-            {/* Section des séances */}
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Séances</h2>
-            <ul>
-                {seances.map((seance) => (
-                    <li key={seance.id} className="mb-4 border-b pb-4">
-                        {/* Affichage des détails de la séance */}
-                        <div>
-                            <strong>Film :</strong> {seance.film?.titre || 'Inconnu'}
-                        </div>
-                        <div>
-                            <strong>Cinéma :</strong> {seance.salle?.cinema?.nom || 'Inconnu'}
-                        </div>
-                        <div>
-                            <strong>Salle :</strong> {seance.salle?.nom || 'Inconnu'}{' '}
-                            ({seance.salle?.capacite || 0} places)
-                        </div>
-                        <div>
-                            <strong>Horaire :</strong> {seance.horaire}
-                        </div>
-                        <div>
-                            <strong>Places disponibles :</strong> {seance.capaciteRestante}
-                        </div>
+            {/* Titre principal */}
+            <header className="bg-white shadow-md py-8">
+                <div className="container mx-auto text-center">
+                    <h1 className="text-5xl font-extrabold text-gray-800">
+                        Bienvenue chez Cinéma Complex
+                    </h1>
+                    <p className="text-xl text-gray-600 mt-4">
+                        Réservez dès maintenant une séance dans un de nos cinémas et découvrez les
+                        derniers films disponibles.
+                    </p>
+                </div>
+            </header>
 
-                        {/* Affichage du formulaire ou message si complet */}
-                        {seance.capaciteRestante <= 0 ? (
-                            <div className="text-red-500 mt-4">
-                                Cette séance est complète. Aucune réservation supplémentaire n'est possible.
-                            </div>
-                        ) : (
-                            <ReservationForm seance={seance} tarifs={tarifs} />
-                        )}
-                    </li>
-                ))}
-            </ul>
+            {/* Contenu principal */}
+            <main className="flex-grow">
+                {/* Hero Section */}
+                <section className="container mx-auto my-8">
+                    <Hero films={films} />
+                </section>
+
+                {/* Section des séances */}
+                <section className="container mx-auto mb-8">
+                    <Seances seances={seances} tarifs={tarifs} />
+                </section>
+            </main>
+
+            {/* Footer */}
+            <Footer />
         </div>
     );
 }

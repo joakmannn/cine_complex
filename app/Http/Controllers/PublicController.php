@@ -14,7 +14,7 @@ class PublicController extends Controller
 {
     public function index()
     {
-        $cinemas = Cinema::withCount('salles')->get();
+        $cinemas = Cinema::all();
         $films = Film::all();
         $tarifs = Tarif::all(); // Récupérer les tarifs
 

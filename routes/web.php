@@ -11,6 +11,9 @@ use Inertia\Inertia;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FilmClickController;
+
+Route::post('/films/{id}/click', [FilmClickController::class, 'incrementClick'])->name('films.incrementClick');
 
 
 

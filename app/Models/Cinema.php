@@ -11,9 +11,12 @@ class Cinema extends Model
 
     protected $fillable = ['nom', 'adresse'];
 
-    public function salles(): HasMany
+    public function salles()
     {
-        return $this->hasMany(Salle::class, 'id_cinema'); // Spécifie la clé étrangère correcte
+        return $this->hasMany(Salle::class, 'cinema_id', 'id');
     }
 }
+
+
+
 

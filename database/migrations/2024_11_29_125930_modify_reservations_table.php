@@ -12,17 +12,26 @@ class ModifyReservationsTable extends Migration
     public function up(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            // Suppression des colonnes inutiles
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            // Supprimer les colonnes avec des clés étrangères
+            if (Schema::hasColumn('reservations', 'user_id')) {
+                $table->dropForeign(['user_id']);
+                $table->dropColumn('user_id');
+            }
 
-            $table->dropForeign(['tarif_id']);
-            $table->dropColumn('tarif_id');
+            if (Schema::hasColumn('reservations', 'tarif_id')) {
+                $table->dropForeign(['tarif_id']);
+                $table->dropColumn('tarif_id');
+            }
 
-            // Ajout des nouvelles colonnes
-            $table->string('nom')->after('seance_id');
-            $table->string('prenom')->after('nom');
-            $table->decimal('prix_total', 8, 2)->nullable()->after('places_reservees');
+            // Ajouter les nouvelles colonnes
+            $table->after('seance_id', function (Blueprint $table) {
+                $table->string('nom');
+                $table->string('prenom');
+            });
+
+            $table->after('places_reservees', function (Blueprint $table) {
+                $table->decimal('prix_total', 8, 2)->nullable();
+            });
         });
     }
 
@@ -32,14 +41,27 @@ class ModifyReservationsTable extends Migration
     public function down(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            // Ajout des colonnes supprimées
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->foreignId('tarif_id')->nullable()->constrained('tarifs')->onDelete('set null');
+            // Ajouter les colonnes supprimées
+            if (!Schema::hasColumn('reservations', 'user_id')) {
+                $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            }
 
-            // Suppression des nouvelles colonnes
-            $table->dropColumn('nom');
-            $table->dropColumn('prenom');
-            $table->dropColumn('prix_total');
+            if (!Schema::hasColumn('reservations', 'tarif_id')) {
+                $table->foreignId('tarif_id')->nullable()->constrained('tarifs')->onDelete('set null');
+            }
+
+            // Supprimer les nouvelles colonnes
+            if (Schema::hasColumn('reservations', 'nom')) {
+                $table->dropColumn('nom');
+            }
+
+            if (Schema::hasColumn('reservations', 'prenom')) {
+                $table->dropColumn('prenom');
+            }
+
+            if (Schema::hasColumn('reservations', 'prix_total')) {
+                $table->dropColumn('prix_total');
+            }
         });
     }
 }

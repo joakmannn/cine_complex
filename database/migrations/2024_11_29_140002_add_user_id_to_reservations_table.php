@@ -6,21 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 class AddUserIdToReservationsTable extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->nullable()->after('id');
-    
-            // Ajouter la clé étrangère vers la table users
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // Ajout de la colonne user_id après la colonne 'id'
+            $table->after('id', function (Blueprint $table) {
+                $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            });
         });
     }
-    
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::table('reservations', function (Blueprint $table) {
-            // Ajoutez ici le code pour supprimer la colonne user_id
+            if (Schema::hasColumn('reservations', 'user_id')) {
+                $table->dropForeign(['user_id']);
+                $table->dropColumn('user_id');
+            }
         });
     }
 }

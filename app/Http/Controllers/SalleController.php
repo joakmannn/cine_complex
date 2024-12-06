@@ -14,7 +14,7 @@ class SalleController extends Controller
     public function index($cinemaId)
 {
     $cinema = Cinema::with(['salles' => function ($query) use ($cinemaId) {
-        $query->where('cinema_id', $cinemaId);
+        $query->where('id_cinema', $cinemaId);
     }])->findOrFail($cinemaId);
 
     return Inertia::render('Salles/Index', [
@@ -44,7 +44,7 @@ class SalleController extends Controller
         Salle::create([
             'nom' => $request->nom,
             'capacite' => $request->capacite,
-            'cinema_id' => $cinemaId, 
+            'id_cinema' => $cinemaId, 
         ]);
 
         // Redirige vers la vue "Show" du cinéma
@@ -56,7 +56,7 @@ class SalleController extends Controller
 
     public function destroy($cinemaId, $salleId)
     {
-        $salle = Salle::where('cinema_id', $cinemaId)->findOrFail($salleId);
+        $salle = Salle::where('id_cinema', $cinemaId)->findOrFail($salleId);
         $salle->delete();
 
         return redirect()->route('cinemas.show', $cinemaId)

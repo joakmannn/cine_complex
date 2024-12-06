@@ -12,8 +12,9 @@ class Film extends Model
 
     protected $fillable = ['titre', 'duree', 'synopsis'];
 
-    public function seances(): HasMany
+    public function seances()
     {
-        return $this->hasMany(Seance::class);
+        return $this->hasMany(Seance::class, 'id_film'); 
     }
+    
 }

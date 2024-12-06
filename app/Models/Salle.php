@@ -14,7 +14,7 @@ class Salle extends Model
     protected $fillable = [
         'nom',
         'capacite',
-        'cinema_id',
+        'id_cinema',
     ];
 
     /**
@@ -22,6 +22,6 @@ class Salle extends Model
      */
     public function cinema()
     {
-        return $this->belongsTo(Cinema::class, 'cinema_id');
+        return $this->belongsTo(Cinema::class, 'id_cinema');
     }
 }

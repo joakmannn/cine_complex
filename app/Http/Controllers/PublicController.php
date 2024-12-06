@@ -42,7 +42,7 @@ class PublicController extends Controller
     public function cinemaShow($id)
     {
         $cinema = Cinema::select('id', 'nom', 'adresse')
-            ->with(['salles:id,nom,capacite,cinema_id'])
+            ->with(['salles:id,nom,capacite,id_cinema'])
             ->findOrFail($id);
 
         return Inertia::render('Public/CinemaShow', [
@@ -55,7 +55,7 @@ class PublicController extends Controller
         $film = Film::select('id', 'titre', 'duree', 'synopsis')
             ->with([
                 'seances:id,horaire,id_salle,id_film',
-                'seances.salle:id,nom,cinema_id',
+                'seances.salle:id,nom,id_cinema',
                 'seances.salle.cinema:id,nom',
             ])
             ->findOrFail($id);

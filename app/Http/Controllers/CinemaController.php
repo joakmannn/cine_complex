@@ -64,7 +64,7 @@ class CinemaController extends Controller
     {
         $cinemas = Cinema::all(); // Charger tous les cinémas
         $films = Film::all(); // Charger tous les films
-        $salles = Salle::where('cinema_id', $cinemaId)->get(); // Charger les salles du cinéma sélectionné
+        $salles = Salle::where('id_cinema', $cinemaId)->get(); // Charger les salles du cinéma sélectionné
 
         return Inertia::render('Seances/Create', [
             'cinemas' => $cinemas,

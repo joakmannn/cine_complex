@@ -1,12 +1,8 @@
 <?php
 
 namespace App\Models;
-use App\Models\film;
-use App\Models\salle;
-use App\Models\reservations;
-
-
-
+use App\Models\Film;
+use App\Models\Salle;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

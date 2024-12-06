@@ -11,15 +11,17 @@ use Inertia\Inertia;
 class SeanceController extends Controller
 {
     public function create()
-{
-    $films = Film::all(); // Récupère tous les films
-    $salles = Salle::with('cinema')->get(); // Récupère les salles avec leurs cinémas associés
-
-    return Inertia::render('Seances/Create', [
-        'films' => $films, // Transmet les films à la vue
-        'salles' => $salles, // Transmet les salles à la vue
-    ]);
-}
+    {
+        $films = Film::all(); // Récupère tous les films
+        $salles = Salle::with(['cinema' => function ($query) {
+            $salles = Salle::with('cinema')->get();
+        }])->get(); 
+        return Inertia::render('Seances/Create', [
+            'films' => $films, // Transmet les films à la vue
+            'salles' => $salles, // Transmet les salles à la vue
+        ]);
+    }
+    
 public function index()
 {
     $seances = Seance::with(['film', 'salle.cinema'])->get();

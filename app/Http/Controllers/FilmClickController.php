@@ -17,6 +17,7 @@ class FilmClickController extends Controller
 
     public function incrementClick($id)
     {
+        // Accéder à la collection MongoDB
         $collection = $this->mongoClient->cine_complex->film_clicks;
 
         // Incrémenter les clics pour le film donné
@@ -26,6 +27,9 @@ class FilmClickController extends Controller
             ['upsert' => true]
         );
 
-        return redirect()->back()->with('message', 'Clic comptabilisé avec succès.');
+        // Réponse via Inertia pour renvoyer les données
+        return Inertia::render('Public/Home', [
+            'message' => 'Clic comptabilisé avec succès.',
+        ]);
     }
 }

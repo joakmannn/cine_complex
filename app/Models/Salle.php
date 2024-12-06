@@ -4,16 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Cinema; 
+
 
 class Salle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom', 'capacite', 'id_cinema']; // Inclut id_cinema
+    protected $fillable = [
+        'nom',
+        'capacite',
+        'cinema_id',
+    ];
 
-    public function cinema(): BelongsTo
+    /**
+     * Relation avec le modèle Cinema
+     */
+    public function cinema()
     {
-        return $this->belongsTo(Cinema::class, 'id_cinema'); // Relation avec la clé étrangère personnalisée
+        return $this->belongsTo(Cinema::class, 'cinema_id');
     }
 }

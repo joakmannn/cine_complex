@@ -28,13 +28,16 @@ Route::prefix('/public')->group(function () {
 });
 
 
-
-// Dashboard route
 Route::get('/dashboard', function () {
+    // Vérifiez si l'utilisateur est authentifié avant d'appeler isAdmin()
+    $isAdmin = auth()->check() ? auth()->user()->isAdmin() : false;
+
     return Inertia::render('Dashboard', [
-        'isAdmin' => auth()->user()->isAdmin(),
+        'isAdmin' => $isAdmin,
     ]);
 })->name('dashboard');
+
+
 
 
 // Authenticated routes

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Film;
@@ -10,6 +11,7 @@ class FilmController extends Controller
     public function index()
     {
         $films = Film::all();
+
         return Inertia::render('Films/Index', [
             'films' => $films,
         ]);
@@ -28,11 +30,7 @@ class FilmController extends Controller
             'synopsis' => 'nullable|string',
         ]);
 
-        Film::create([
-            'titre' => $request->titre,
-            'duree' => $request->duree,
-            'synopsis' => $request->synopsis,
-        ]);
+        Film::create($request->only('titre', 'duree', 'synopsis'));
 
         return redirect()->route('films.index')->with('success', 'Film ajouté avec succès.');
     }
@@ -40,6 +38,7 @@ class FilmController extends Controller
     public function show($id)
     {
         $film = Film::findOrFail($id);
+
         return Inertia::render('Films/Show', [
             'film' => $film,
         ]);

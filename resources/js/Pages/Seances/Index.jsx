@@ -1,13 +1,24 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 
 export default function Index({ seances }) {
+    const { delete: destroy } = useForm();
+
+    const handleDelete = (id) => {
+        if (confirm('Voulez-vous vraiment supprimer cette séance ?')) {
+            destroy(route('seances.destroy', id), {
+                onSuccess: () => alert('Séance supprimée avec succès'),
+                onError: (errors) => console.error(errors),
+            });
+        }
+    };
+
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Liste des séances</h1>
 
             <Link
-                href="/seances/create"
+                href={route('seances.create')}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
                 Ajouter une séance
@@ -46,24 +57,12 @@ export default function Index({ seances }) {
                                     Voir
                                 </Link>
                                 {' | '}
-                                <form
-                                    method="POST"
-                                    action={`/seances/${seance.id}`}
-                                    onSubmit={(e) => {
-                                        if (!confirm('Voulez-vous vraiment supprimer cette séance ?')) {
-                                            e.preventDefault();
-                                        }
-                                    }}
-                                    style={{ display: 'inline' }}
+                                <button
+                                    onClick={() => handleDelete(seance.id)}
+                                    className="text-red-500 hover:underline ml-2"
                                 >
-                                    <input type="hidden" name="_method" value="DELETE" />
-                                    <button
-                                        type="submit"
-                                        className="text-red-500 hover:underline ml-2"
-                                    >
-                                        Supprimer
-                                    </button>
-                                </form>
+                                    Supprimer
+                                </button>
                             </td>
                         </tr>
                     ))}
